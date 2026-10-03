@@ -109,14 +109,14 @@ class LighthousePhotonicsSproutG(VisaInstrument):
         )
         """Enable/disable the output."""
         self.output_power = Parameter('output_power', get_cmd='POWER?',
-                                      set_cmd='POWER SET={:.2f}',
-                                      get_parser=float,
-                                      unit='W', instrument=self)
-        """The current output power. The setter uses the output_setpoint
-        parameter."""
+                                      get_parser=float, unit='W',
+                                      instrument=self)
+        """The current output power."""
         self.output_setpoint = Parameter('output_setpoint',
-                                         get_cmd='POWER SET?', unit='W',
-                                         get_parser=float, instrument=self)
+                                         get_cmd='POWER SET?',
+                                         set_cmd='POWER SET={:.2f}',
+                                         get_parser=float, unit='W',
+                                         instrument=self)
         """The output power setpoint."""
 
         self.connect_message()

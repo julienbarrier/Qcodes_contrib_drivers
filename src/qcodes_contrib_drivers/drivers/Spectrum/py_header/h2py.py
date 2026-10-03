@@ -22,6 +22,7 @@
 # - what to do about macros with multiple parameters?
 
 import sys, re, getopt, os
+from typing import Any
 
 p_define = re.compile('^[\t ]*#[\t ]*define[\t ]+([a-zA-Z0-9_]+)[\t ]+')
 
@@ -40,7 +41,7 @@ p_char = re.compile(r"'(\\.[^\\]*|[^\\])'")
 p_hex = re.compile(r"0x([0-9a-fA-F]+)L?")
 
 filedict = {} # type: dict
-importable = {}
+importable: dict[str,Any] = {}
 
 try:
     searchdirs=os.environ['include'].split(';')

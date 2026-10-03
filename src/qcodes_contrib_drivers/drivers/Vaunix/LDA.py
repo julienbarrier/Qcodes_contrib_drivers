@@ -206,7 +206,7 @@ class LdaParameter(Parameter):
             dll_get_function: DLL function that gets the value
             dll_get_function: DLL function that sets the value
         """
-        super().__init__(name, instrument, **kwargs)
+        super().__init__(name, instrument=instrument, **kwargs)
         self._reference = instrument.root_instrument.reference
         self._dll_get_function = partial(dll_get_function, self._reference)
         self._dll_set_function = partial(dll_set_function, self._reference)

@@ -1,0 +1,63 @@
+spec: "1.1"
+devices:
+  Keysight_33502A:
+    eom:
+      GPIB INSTR:
+        q: "\n"
+        r: "\n"
+
+    error: ERROR
+
+    dialogues:
+      - q: "*IDN?"
+        r: "Agilent Technologies, 33502A, 1, 0.1"
+
+    properties:
+      coupling_ch1:
+        default: "DC"
+        getter:
+          q: "INPut1:COUPling?"
+          r: "{}"
+        setter:
+          q: "INPut1:COUPling {}"
+        specs:
+          type: str
+          valid: ["DC", "AC"]
+
+      impedance_ch1:
+        default: 1.000000E+006
+        getter:
+          q: "INPut1:IMPedance?"
+          r: "{:.8E}"
+        setter:
+          q: "INPut1:IMPedance {}"
+        specs:
+          type: float
+          min: 5.000000E+001
+          max: 1.000000E+006
+
+      path_ch1:
+        default: "DIR"
+        getter:
+          q: "ROUTe1:PATH?"
+          r: "{}"
+        setter:
+          q: "ROUTe1:PATH {}"
+        specs:
+          type: str
+          valid: ["DIR", "AMPL"]
+
+      state_ch1:
+        default: 0
+        getter:
+          q: "OUTPut1:STATe?"
+          r: "{}"
+        setter:
+          q: "OUTPut1:STATe {}"
+        specs:
+          type: int
+          valid: [0, 1]
+
+resources:
+  GPIB::1::INSTR:
+    device: Keysight_33502A

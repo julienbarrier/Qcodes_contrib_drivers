@@ -23,26 +23,26 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        python-version: ["3.11", "3.12", "3.13"]
+        python-version: ["3.12", "3.13", "3.14"]
         exclude:
           - os: windows-latest
-            python-version: "3.12"
-          - os: windows-latest
             python-version: "3.13"
+          - os: windows-latest
+            python-version: "3.14"
     env:
       DISPLAY: ':99.0'
       OS: ${{ matrix.os }}
       PYTHON: ${{ matrix.python-version }}
 
     steps:
-    - uses: actions/checkout@v6.0.0
+    - uses: actions/checkout@v7.0.1
       with:
         submodules: true
     - name: setup ubuntu-latest xvfb
       uses: ./.github/actions/setup-ubuntu-latest-xvfb
       if: runner.os == 'Linux'
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v6.1.0
+      uses: actions/setup-python@v7.0.0
       with:
         python-version: ${{ matrix.python-version }}
         cache: 'pip'
@@ -61,7 +61,7 @@ jobs:
       run: |
         pytest --cov=qcodes_contrib_drivers --cov-report xml --cov-config=pyproject.toml tests
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v5.5.1
+      uses: codecov/codecov-action@v7.0.0
       with:
         env_vars: OS,PYTHON
       env:

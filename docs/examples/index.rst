@@ -12,3 +12,5 @@ To experiment with the examples you can download them directly from the git repo
     QDevil/index
     HP/*
     Cryomagnetics/*
+    Santec/*
+    Yokogawa/*

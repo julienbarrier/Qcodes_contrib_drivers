@@ -93,24 +93,21 @@ class MultiAxisPositionParameter(MultiParameter):
                 for key in ('axis_1', 'axis_2', 'axis_3')]
         sets, targets = zip(*vals)
         axes_to_move = list(compress(range(3), sets))
-        try:
-            # Set target positions
-            self.instrument.device.control.MultiAxisPositioning(*sets, *targets)
-            # Start moving
-            for axis in axes_to_move:
-                self.instrument.device.control.setControlMove(axis, True)
-            # Wait for target reached
-            while not all(self.instrument.device.status.getStatusTargetRange(axis)
-                          for axis in axes_to_move):
-                pass
-            # Stop moving
-            for axis in axes_to_move:
-                self.instrument.device.control.setControlMove(axis, False)
-        except self.instrument.exception_type as err:
-            raise NotImplementedError from err
-        else:
-            # Cache target position on axis channels
-            self._update_cache(**value_dict)
+
+        # Set target positions
+        self.instrument.device.control.MultiAxisPositioning(*sets, *targets)
+        # Start moving
+        for axis in axes_to_move:
+            self.instrument.device.control.setControlMove(axis, True)
+        # Wait for target reached
+        while not all(self.instrument.device.status.getStatusTargetRange(axis)
+                      for axis in axes_to_move):
+            pass
+        # Stop moving
+        for axis in axes_to_move:
+            self.instrument.device.control.setControlMove(axis, False)
+        # Cache target position on axis channels
+        self._update_cache(**value_dict)
 
     def _update_cache(self, axis_1: float = np.nan, axis_2: float = np.nan,
                       axis_3: float = np.nan):
@@ -159,6 +156,7 @@ class AMC100Axis(InstrumentChannel):
             scale=_POSITION_SCALE,
             label=f"Reference Position {f'axis {axis}' if label is None else label}",
             unit='mm' if self.actor_type() == 'linear' else '°',
+            snapshot_exclude=True,
             instrument=self
         )
         self.position = Parameter(
