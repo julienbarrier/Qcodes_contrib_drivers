@@ -94,6 +94,8 @@ def test_format_border(vnaks):
     # Valid enum values: "NORM", "SWAP"
     verify_property(vnaks, "format_border", ["NORM", "SWAP"])
 
+def test_electrical_delay(vnaks):
+    verify_property(vnaks, "electrical_delay", [1e-9, 2e-4, -5e-2, 9.9])
 
 def test_get_data(vnaks, monkeypatch):
     # Arrange: have query_binary_values return a known list of floats

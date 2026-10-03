@@ -1376,6 +1376,7 @@ class QDac2Channel(InstrumentChannel):
             unit='s',
             set_cmd='sens{1}:aper {0}'.format('{}', channum),
             get_cmd=f'sens{channum}:aper?',
+            set_parser=float,
             get_parser=float
         )
         self.add_parameter(
@@ -1383,6 +1384,7 @@ class QDac2Channel(InstrumentChannel):
             label='PLC',
             set_cmd='sens{1}:nplc {0}'.format('{}', channum),
             get_cmd=f'sens{channum}:nplc?',
+            set_parser=int,
             get_parser=int
         )
         self.add_parameter(
@@ -1391,6 +1393,7 @@ class QDac2Channel(InstrumentChannel):
             unit='s',
             set_cmd='sens{1}:del {0}'.format('{}', channum),
             get_cmd=f'sens{channum}:del?',
+            set_parser=float,
             get_parser=float
         )
         self.add_function(
@@ -1402,6 +1405,7 @@ class QDac2Channel(InstrumentChannel):
             label='count',
             set_cmd='sens{1}:coun {0}'.format('{}', channum),
             get_cmd=f'sens{channum}:coun?',
+            set_parser=int,
             get_parser=int
         )
         self.add_parameter(
@@ -1500,6 +1504,7 @@ class QDac2Channel(InstrumentChannel):
             unit='V',
             set_cmd='sour{1}:volt:trig {0}'.format('{}', channum),
             get_cmd=f'sour{channum}:volt:trig?',
+            set_parser=float,
             get_parser=float
         )
         self.add_parameter(
@@ -1508,6 +1513,7 @@ class QDac2Channel(InstrumentChannel):
             unit='V/s',
             set_cmd='sour{1}:volt:slew {0}'.format('{}', channum),
             get_cmd=f'sour{channum}:volt:slew?',
+            set_parser=float,
             get_parser=float,
             vals=validators.Numbers(0.01, 2e7)
         )

@@ -1,9 +1,8 @@
-import time
 from typing import Any
 
 import numpy as np
 from qcodes import validators as vals
-from qcodes import VisaInstrument
+from qcodes.instrument import VisaInstrument
 from qcodes.parameters import Parameter, create_on_off_val_mapping
 from qcodes.validators import Enum, Numbers
 
@@ -12,7 +11,6 @@ class KeySight_E5080B(VisaInstrument):
     """
     Qcodes driver for the Keysight E5080B Vector Network Analyzer
     """
-    time.sleep(5)  # Required sleep to ensure the instruments can start being queried
 
     def __init__(self, name: str, address: str, **kwargs: Any) -> None:
         super().__init__(name, address, terminator="\n", **kwargs)
@@ -291,6 +289,19 @@ class KeySight_E5080B(VisaInstrument):
             get_parser=int,
         )
         """Status Operation"""
+
+        # The more intuitive unit for this parameter is nanoseconds, even the instrument documentation uses nanoseconds to exemplify, that's why this unit was chosen.
+        self.electrical_delay: Parameter = self.add_parameter(
+            "electrical_delay",
+            label="Electrical Delay",
+            set_cmd="CALC:MEAS:CORR:EDEL:TIME {}",
+            get_cmd="CALC:MEAS:CORR:EDEL:TIME?",
+            set_parser=lambda v: float(v) / 1e9,
+            get_parser=lambda v: float(v) * 1e9,
+            unit="s",
+            vals=Numbers(min_value=-1e10, max_value=1e10),
+        )
+        """Electrical Delay in nanoseconds"""
 
         # Clear averages
         # Clears and restarts averaging of the measurement data. Does NOT apply to point averaging.

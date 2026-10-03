@@ -1,0 +1,112 @@
+spec: "1.1"
+devices:
+  Keithley6500:
+    eom:
+      GPIB INSTR:
+        q: "\n"
+        r: "\n"
+      TCPIP INSTR:
+        q: "\n"
+        r: "\n"
+    properties:
+      digi_sense_function:
+        default: '"VOLT"'
+        getter:
+          q: ":SENSe:DIGitize:FUNCtion?"
+          r: "{}"
+        setter:
+          q: ":SENSe:DIGitize:FUNCtion {}"
+        specs:
+          type: str
+
+      digitize_trigger:
+        default: "NONE"
+        getter:
+          q: ":TRIGger:DIGitize:STIMulus?"
+          r: "{}"
+        setter:
+          q: ":TRIGger:DIGitize:STIMulus {}"
+        specs:
+          type: str
+          valid: ["NONE", "EXT"]
+
+      digi_volt_range:
+        default: 10.0
+        getter:
+          q: ":SENSe:DIGitize:voltage:RANGe?"
+          r: "{}"
+        setter:
+          q: ":SENSe:DIGitize:voltage:RANGe {}"
+        specs:
+          type: float
+
+      digi_volt_srate:
+        default: 10000
+        getter:
+          q: ":SENSe:DIGitize:voltage:SRATE?"
+          r: "{}"
+        setter:
+          q: ":SENSe:DIGitize:voltage:SRATE {}"
+        specs:
+          type: int
+
+      digi_volt_aperture:
+        default: 1.0
+        getter:
+          q: ":SENSe:DIGitize:voltage:APERture?"
+          r: "{}"
+        setter:
+          q: ":SENSe:DIGitize:voltage:APERture {}"
+        specs:
+          type: float
+
+      digi_curr_range:
+        default: 1.0
+        getter:
+          q: ":SENSe:DIGitize:current:RANGe?"
+          r: "{}"
+        setter:
+          q: ":SENSe:DIGitize:current:RANGe {}"
+        specs:
+          type: float
+
+      digi_curr_srate:
+        default: 5000
+        getter:
+          q: ":SENSe:DIGitize:current:SRATE?"
+          r: "{}"
+        setter:
+          q: ":SENSe:DIGitize:current:SRATE {}"
+        specs:
+          type: int
+
+      digi_curr_aperture:
+        default: 1.0
+        getter:
+          q: ":SENSe:DIGitize:current:APERture?"
+          r: "{}"
+        setter:
+          q: ":SENSe:DIGitize:current:APERture {}"
+        specs:
+          type: float
+
+      digi_count:
+        default: 1000
+        getter:
+          q: "SENSe:DIGitize:COUNt?"
+          r: "{}"
+        setter:
+          q: "SENSe:DIGitize:COUNt {}"
+        specs:
+          type: int
+
+    dialogues:
+      - q: "*IDN?"
+        r: "KEITHLEY INSTRUMENTS INC.,MODEL DMM6500,01234567,1.0.0"
+      - q: ":SYSTem:CARD1:IDN?"
+        r: "Empty Slot"
+      - q: ":ABORt"
+
+resources:
+  GPIB0::1::INSTR:
+    device: Keithley6500

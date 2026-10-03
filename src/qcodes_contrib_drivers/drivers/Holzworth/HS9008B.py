@@ -280,40 +280,6 @@ class HS9008B(VisaInstrument):
 
         self.connect_message()
 
-    def set_address(self, address: str) -> None:
-        """
-        Set the address for this instrument.
-
-        Args:
-            address: The visa resource name to use to connect. The address
-                should be the actual address and just that. If you wish to
-                change the backend for VISA, use the self.visalib attribute
-                (and then call this function).
-        """
-
-        # in case we're changing the address - close the old handle first
-        if getattr(self, 'visa_handle', None):
-            self.visa_handle.close()
-
-        if self.visalib:
-            self.visa_log.info('Opening PyVISA Resource Manager with visalib:'
-                          ' {}'.format(self.visalib))
-            resource_manager = visa.ResourceManager(self.visalib)
-            self.visabackend = self.visalib.split('@')[1]
-        else:
-            self.visa_log.info('Opening PyVISA Resource Manager with default'
-                          ' backend.')
-            resource_manager = visa.ResourceManager()
-            self.visabackend = 'ni'
-
-        self.visa_log.info(f'Opening PyVISA resource at address: {address}')
-        resource = resource_manager.open_resource(address, send_end=False)
-        if not isinstance(resource, visa.resources.MessageBasedResource):
-            raise TypeError("QCoDeS only support MessageBasedResource "
-                            "Visa resources")
-        self.visa_handle = resource
-        self._address = address
-
     def _get_channels(self) -> list:
         """Getting the available channel names. Instrument returns string
         in the form :REF:CH1:CH2:'

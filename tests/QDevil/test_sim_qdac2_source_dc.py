@@ -133,9 +133,9 @@ def test_voltage_slew(qdac):  # noqa
     qdac.ch02.dc_slew_rate_V_per_s(10)
     slew = qdac.ch02.dc_slew_rate_V_per_s()
     # -----------------------------------------------------------------------
-    assert slew == 10
+    assert slew == 10.0
     assert qdac.get_recorded_scpi_commands() == [
-        'sour2:volt:slew 10',
+        'sour2:volt:slew 10.0',
         'sour2:volt:slew?',
     ]
 

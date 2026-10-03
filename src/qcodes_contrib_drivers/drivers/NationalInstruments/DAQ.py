@@ -34,7 +34,7 @@ class DAQAnalogInputVoltages(ArrayParameter):
     """
     def __init__(self, name: str, task: Any, samples_to_read: int,
                  shape: Sequence[int], timeout: Union[float, int], **kwargs) -> None:
-        super().__init__(name, shape, **kwargs)
+        super().__init__(name=name, shape=shape, **kwargs)
         self.task = task
         self.nchannels, self.target_points = shape
         self.samples_to_read = samples_to_read
